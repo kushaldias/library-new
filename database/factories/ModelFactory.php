@@ -11,11 +11,35 @@
 |
 */
 
+/* DEFAULT
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
+    ];
+});
+*/
+
+/* Regular User */
+$factory->defineAs(App\User::class, 'user', function (Faker\Generator $faker) {
+    return [
+    'name' => $faker->name,
+    'email' => $faker->unique()->email,
+    'password' => bcrypt(str_random(10)),
+    'type' => 'access',
+    'remember_token' => str_random(10),
+    ];
+});
+
+/* Admin User */
+$factory->defineAs(App\User::class, 'admin', function (Faker\Generator $faker) {
+    return [
+    'name' => $faker->name,
+    'email' => $faker->unique()->email,
+    'password' => bcrypt(str_random(10)),
+    'type' => 'admin',
+    'remember_token' => str_random(10),
     ];
 });
